@@ -9,7 +9,7 @@ export interface CartItem {
   porcao: string
 }
 
-type CartState = {
+export type CartState = {
   items: CartItem[]
   isOpen: boolean
 }

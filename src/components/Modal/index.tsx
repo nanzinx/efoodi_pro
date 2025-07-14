@@ -30,7 +30,7 @@ const ModalPoupap: React.FC<ModalPoupapProps> = ({
 }) => {
   const dispatch = useDispatch()
   const items = useSelector(
-    (state: { cart?: { items?: CartItem[] } }) => state.cart?.items || []
+    (state: { cart: { items: CartItem[] } }) => state.cart.items
   )
 
   const handleAddToCart = () => {

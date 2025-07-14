@@ -1,5 +1,9 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useLocation, useParams } from 'react-router-dom'
+
+import { RootReducer } from '../../store'
+import { open } from '../../store/reducers/cart'
 
 import LogoImgHome from '../../assets/images/logo.png'
 import BannerImgHome from '../../assets/images/fundo.png'
@@ -12,14 +16,22 @@ export type Props = {
 
 const Header = ({ background }: Props) => {
   const location = useLocation()
+  const { id } = useParams<{ id: string }>()
 
   const titleText =
     location.pathname === '/Perfil'
       ? ''
       : 'Viva experiências gastronômicas no conforto da sua casa'
 
-  const titleRestaurate = 'Restaurantes'
-  const titleCarrinho = '0 produto(s) no carrinho'
+  const dispatch = useDispatch()
+  const { items } = useSelector((state: RootReducer) => state.cart)
+
+  const openCart = () => {
+    dispatch(open())
+  }
+
+  const titleRestaurate = id ? 'Restaurantes' : ''
+  const titleCarrinho = id ? `${items.length} produto(s) no carrinho` : ''
 
   return (
     <S.HeaderPage className="container">
@@ -41,7 +53,9 @@ const Header = ({ background }: Props) => {
             </Link>
 
             <S.CarrinhoDeProdutos>
-              <S.CartButton role="button">{titleCarrinho}</S.CartButton>
+              <S.CartButton role="button" onClick={openCart}>
+                {titleCarrinho}
+              </S.CartButton>
             </S.CarrinhoDeProdutos>
           </S.ContainerHeader>
           <S.Titulo>{titleText}</S.Titulo>
