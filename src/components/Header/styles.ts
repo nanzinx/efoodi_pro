@@ -72,12 +72,11 @@ export const Titulo = styled.h2`
   }
 `
 export const ContainerHeader = styled.div`
-  display: flex;
   width: 100%;
+  display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 59px 171px 0;
 
   @media (max-width: ${breakpoints.mobile}) {
     align-items: center;
@@ -86,8 +85,8 @@ export const ContainerHeader = styled.div`
 export const RestaurantName = styled(ContainerHeader)`
   font-size: 18px;
   font-weight: 900;
-  justify-content: center;
-  padding-top: none;
+  justify-content: left;
+  padding: 16px 8px;
 
   @media (max-width: ${breakpoints.tablet}) {
     margin-top: 40px;
@@ -100,8 +99,8 @@ export const RestaurantName = styled(ContainerHeader)`
 export const CarrinhoDeProdutos = styled(ContainerHeader)`
   font-size: 18px;
   font-weight: 900;
-  justify-content: center;
-  padding-top: none;
+  justify-content: right;
+  padding: 16px 8px;
 
   @media (max-width: ${breakpoints.tablet}) {
     margin-top: 40px;
