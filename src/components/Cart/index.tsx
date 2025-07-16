@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Checkout from '../../pages/Checkout'
 import { RootReducer } from '../../store'
 import { close, remove } from '../../store/reducers/cart'
 import { getTotalPrice, parseToBrl } from '../../utils'
@@ -63,6 +64,8 @@ const Cart = () => {
           )}
         </S.Sidebar>
       </S.CartContainer>
+
+      {showCheckout && <Checkout onClose={() => setShowCheckout(false)} />}
     </>
   )
 }
