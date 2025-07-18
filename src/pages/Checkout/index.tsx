@@ -48,8 +48,8 @@ const Checkout = ({ onClose }: { onClose: () => void }) => {
       endereco: Yup.string().required('O campo é obrigatório'),
       cidade: Yup.string().required('O campo é obrigatório'),
       cep: Yup.string()
-        .length(10, 'O campo precisa ter 10 caracteres')
-        .required('O campo é obrigatório'),
+        .required('O campo é obrigatório')
+        .matches(/^\d{5}-\d{3}$/, 'CEP incompleto'),
       numero: Yup.string().required('O campo é obrigatório'),
       fullComplemento: Yup.string(),
 
@@ -58,20 +58,19 @@ const Checkout = ({ onClose }: { onClose: () => void }) => {
         .when((values, schema) =>
           payWith ? schema.required('O campo é obrigatorio') : schema
         ),
-      numbCard: Yup.string().when((values, schema) =>
-        payWith ? schema.required('O campo é obrigatorio') : schema
-      ),
+      numbCard: Yup.string()
+        .required('O campo é obrigatorio')
+        .matches(/^\d{4} \d{4} \d{4} \d{4}$/, 'Número de cartão incompleto'),
       cardCode: Yup.string()
-        .max(3, 'São permitidos até 3 dígitos')
-        .when((values, schema) =>
-          payWith ? schema.required('O campo é obrigatorio') : schema
-        ),
-      expiresMonth: Yup.string().when((values, schema) =>
-        payWith ? schema.required('O campo é obrigatorio') : schema
-      ),
-      expiresYear: Yup.string().when((values, schema) =>
-        payWith ? schema.required('O campo é obrigatorio') : schema
-      )
+        .required('O campo é obrigatorio')
+        .matches(/^\d{3}$/, 'Deve conter exatamente 3 dígitos'),
+      expiresMonth: Yup.string()
+        .required('O campo é obrigatorio')
+        .matches(/^(0[1-9]|1[0-2])$/, 'Mês inválido (01-12)'),
+
+      expiresYear: Yup.string()
+        .required('O campo é obrigatorio')
+        .matches(/^\d{4}$/, 'Ano deve conter 4 dígitos')
     }),
     onSubmit: (values) => {
       purchase({
@@ -261,7 +260,7 @@ const Checkout = ({ onClose }: { onClose: () => void }) => {
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         className={checkInputHasError('cep') ? 'error' : ''}
-                        mask="99.999-999"
+                        mask="99999-999"
                       />
                     </div>
                     <div>
